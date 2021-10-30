@@ -1,0 +1,128 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Appointment
+
+@{
+    ViewBag.Title = "Take Appointment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color: #333333; justify-content: center; text-align: center; width: 270px; height: 70px; margin: auto; margin-top: 15px; margin-bottom: 20px; border: solid 1px; border-radius: 10px; border-color: black ">
+    <h2 style=" color: #9d9d9d">Take Appointment</h2>
+</div>
+
+
+
+@using (Html.BeginForm("TakeAppointment", "User", FormMethod.Post, new { id = "create-form" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div style="background-color: #333333;margin-top:40px; margin: auto; border: solid 1px; border-radius: 10px; border-color: black; width: 500px; " class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div style="margin-top: 30px; margin-left: 0px; width: 100%" class="form-group text-center">
+            @Html.LabelFor(model => model.hospitalId, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.DropDownListFor(model => model.hospitalId, new SelectList(Model.hospitalsCollection, "id", "name"), "--Select Hospital--", new { @class = "form-control" })</center>
+                @Html.ValidationMessageFor(model => model.hospitalId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.doctorId, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.DropDownListFor(model => model.doctorId, new SelectList(" "), "--Select Doctor--", new { @class = "form-control" })</center>
+                @Html.ValidationMessageFor(model => model.doctorId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.appointmentDate, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div id="sdf" name="sdf" style="width:100%">
+                <center>@Html.EditorFor(model => model.appointmentDate, new { htmlAttributes = new { @class = "datepicker form-control datechoosing" } })</center>
+                @Html.ValidationMessageFor(model => model.appointmentDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.timeId, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.DropDownListFor(model => model.timeId, new SelectList(Model.timesCollection, "id", "time"), "--Select Hour--", new { @class = "form-control" })</center>
+                @Html.ValidationMessageFor(model => model.timeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.appointmentNote, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.TextAreaFor(model => model.appointmentNote, new { @class = "textarea", @rows = 3, @cols = 100 })</center>
+                @Html.ValidationMessageFor(model => model.appointmentNote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div style="margin-left:0px;margin-right:0px;margin-top:35px; width: 100% " class="form-group">
+            <div style="margin:0px; padding:0px; width: 100% " class="col-md-offset-2 col-md-10">
+                <center><input type="submit" value="Randevu Al" style="background-color: #9d9d9d; border-color: #9d9d9d; font-size: 17px; color: black " class="btn btn-default" /></center>
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="margin:0px; width:100%" class="col-md-offset-2 col-md-10">
+                <center><label style="color: #9d9d9d">@ViewBag.Notification</label></center>
+            </div>
+        </div>
+    </div>
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/mystyles.css" rel="stylesheet" />
+@section scripts {
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+
+                $(document).ready(function () {
+                            $("#doctorId").prop("disabled", true);
+                            $("#appointmentDate").prop("disabled", true);
+                            $("#timeId").prop("disabled", true);
+                            $("#hospitalId").change(function () {
+                                $("#doctorId").prop("disabled", false);
+                                $.get("/User/GetDoctorList", { hospitalId: $("#hospitalId").val() }, function (data) {
+                                    $("#doctorId").empty();
+                                    $.each(data, function (index, row) {
+                                        $("#doctorId").append("<option value='" + row.id + "'>" + row.name + "</option>")
+                                        $("#doctorId").trigger("change");
+                                    });
+                                });
+
+                            })
+                            $("#doctorId").change(function () {
+                                $("#appointmentDate").prop("disabled", false);
+                                $("#sdf .ui-datepicker-trigger").prop("disabled", false);
+                                $("#appointmentDate").trigger("change");
+                            })
+                            $("#appointmentDate").change(function () {
+                                $("#timeId").prop("disabled", false);
+                                $("#timeId").trigger("change");
+                            })
+                            $(function () {
+                                $(".datepicker").datepicker({
+                                    dateFormat: "yy-mm-dd",
+                                    changeYear: true,
+                                    changeMonth: true,
+                                    minDate: new Date(),
+                                    maxDate: new Date(2023, 0, 1),
+                                    showOn: "both",
+                                    buttonText: "<i class='fa fa-calendar datesymbol'></i>"
+
+                                });
+                                $("#sdf .ui-datepicker-trigger").prop("disabled", true);
+                            });
+                        });
+
+    </script>
+
+
+}
+

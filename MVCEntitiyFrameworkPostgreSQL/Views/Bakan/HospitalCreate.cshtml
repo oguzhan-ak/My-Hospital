@@ -1,0 +1,44 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Hospital
+
+@{
+    ViewBag.Title = "Create Hospital";
+    Layout = "~/Views/Shared/_BakanLayout.cshtml";
+}
+
+<div style="background-color: #333333; justify-content: center; text-align: center; width: 220px; height: 60px; margin: auto; margin-top: 15px; margin-bottom: 20px; border: solid 1px; border-radius: 10px; border-color: black ">
+    <h2 style="margin-top: 13px; color: #9d9d9d">Create Hospital</h2>
+</div>
+@using (Html.BeginForm("HospitalCreate", "Bakan", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div style="background-color: #333333;margin-top:40px; margin: auto; border: solid 1px; border-radius: 10px; border-color: black; width: 500px; " class="form-horizontal">
+       
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div style="margin-top:50px;margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control center" } })</center>
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.address, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;;width:170px", @class = "control-label col-md-2" })
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })</center>
+                @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin:20px 0px; width: 100% " class="form-group">
+            <div style="margin:0px; padding:0px; width: 100% " class="col-md-offset-2 col-md-10">
+                <center><input type="submit" value="Create" style="background-color: #9d9d9d; border-color: #9d9d9d; font-size: 17px; color: black " class="btn btn-success" /></center>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Return to Hospital List", "HospitalIndex")
+</div>

@@ -1,0 +1,109 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.User
+
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div style="background-color: #333333; justify-content: center; text-align: center; width: 250px; height: 60px; margin: auto; margin-top: 15px; margin-bottom: 20px; border: solid 1px; border-radius: 10px; border-color: black ">
+    <h2 style="margin-top: 13px; color: #9d9d9d"><b>Edit My Account</b></h2>
+</div>
+
+
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div style="background-color: #333333; margin: auto; border: solid 1px; border-radius: 10px; border-color: black; width: 800px; height: 500px; " class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.isActive)
+    @Html.HiddenFor(model => model.createdDate)
+    <div style="width: 399px; height: 400px; float: left;">
+        <div style="margin-top:50px;margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.username, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control center" } })</center>
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })</center>
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px; width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.password, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })</center>
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.confirmpassword, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.confirmpassword, new { htmlAttributes = new { @class = "form-control" } })</center>
+                @Html.ValidationMessageFor(model => model.confirmpassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div style="width: 399px; height: 400px; float: right;">
+        <div style="margin-top:50px;margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.age, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.age, new { htmlAttributes = new { @class = "form-control"} })</center>
+                @Html.ValidationMessageFor(model => model.age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.weight, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.weight, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter like 56.5 or like 67" } })</center>
+                @Html.ValidationMessageFor(model => model.weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px; width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.height, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.height, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter in cm format" } })</center>
+                @Html.ValidationMessageFor(model => model.height, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.bloodTypeId, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.DropDownListFor(model => model.bloodTypeId, new SelectList(Model.bloodTypesCollection, "id", "type"), "Select",new { @class = "form-control" })</center>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div style="margin: 0px; width: 100%;" class="col-md-offset-2 col-md-10">
+            <center><input style="height: 40px; width: 70px; font-size: 20px; font-weight: 500; background-color: #9d9d9d;border-color:black" type="submit" value="Save" class="btn btn-default" /></center>
+        </div>
+    </div>
+</div>
+}
+<br />
+<br />
+<div style="margin-left:513px;color:black;" class="btn btn-danger">
+    @Html.ActionLink("Delete My Account", "Delete", new { id = Model.id }, htmlAttributes: new { style = "color: black;text-align:center;float:none;width:170px;text-decoration: none;" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

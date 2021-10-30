@@ -1,0 +1,83 @@
+﻿@using MVCEntitiyFrameworkPostgreSQL.Models;
+@model AppointmentDoctorHospitalVM
+@{
+    ViewBag.Title = "ResultIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">My Results</h2></center>
+<br />
+@if (Model.results.Count() == 0)
+{
+    <hr />
+    <br />
+    <center><h2>You don't have any results</h2></center>
+    <br />
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Result</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Created Date</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Created Doctor Name</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Updated Date</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Updated Doctor Name</h5>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (Result result in Model.results)
+        {
+            <tr>
+                <td>
+                    @result.resultText
+                </td>
+                <td>
+                    @result.createdDate
+                </td>
+                <td>
+                    @Model.doctors.Where(x => x.id.ToString().Equals(result.createdDoctorId.ToString())).ToArray()[0].name
+                </td>
+                @if (result.updatedDate == null)
+                {
+                    <td>
+                        Not Updated Yet
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @result.updatedDate
+                    </td>
+                }
+                @if (result.updatedDoctorId == null)
+                {
+                    <td>
+                        Not Updated Yet
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Model.doctors.Where(x => x.id.ToString().Equals(result.createdDoctorId.ToString())).ToArray()[0].name
+                    </td>
+                }
+                <td>
+                    <a class="btn btn-info" href="~/User/ResultDetails/@result.id.ToString()">See Details</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

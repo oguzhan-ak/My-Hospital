@@ -1,0 +1,73 @@
+﻿@using MVCEntitiyFrameworkPostgreSQL.Models;
+@model AppointmentDoctorHospitalVM
+
+@{
+    ViewBag.Title = "DoctorIndex";
+}
+
+<center><h2 style="font-weight: bold;">Doctors</h2></center>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Doctor Name</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Doctor E-mail</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">The hospital where s/he works</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Doctor Title</h5>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Doctor doctor in Model.doctors)
+    {
+        if (doctor.isAdmin==false)
+        {
+            <tr>
+                <td>
+                    @doctor.name
+                </td>
+                <td>
+                    @doctor.email
+                </td>
+                @if (@Model.hospitals.Where(x => x.id.Equals(doctor.hospitalId)).ToArray().Count() == 0)
+                {
+                    <td>
+                        Hospital not set
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Model.hospitals.Where(x => x.id.Equals(doctor.hospitalId)).ToArray()[0].name
+                    </td>
+                }
+                @if (doctor.title == null)
+                {
+                    <td>
+                        Title not set
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @doctor.title
+                    </td>
+                }
+
+                <td>
+                    <a class="btn btn-info" href="~/User/DoctorDetails/@doctor.id.ToString()">Details</a>
+                </td>
+
+
+            </tr>
+        }
+        
+    }
+
+</table>

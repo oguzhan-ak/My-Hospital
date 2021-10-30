@@ -1,0 +1,70 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Appointment
+
+@{
+    ViewBag.Title = "AppointmentDelete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">Cancel Appointment</h2></center>
+<br />
+
+<h3>Are you sure you want to cancel this appointment ?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.doctorId):
+        </dt>
+
+        <dd>
+            @Model.doctorsCollection.Find(x=>x.id.Equals(Model.doctorId)).name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hospitalId):
+        </dt>
+
+        <dd>
+            @Model.hospitalsCollection.Find(x => x.id.Equals(Model.hospitalId)).name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.timeId):
+        </dt>
+
+        <dd>
+            @Model.timesCollection.Find(x => x.id.Equals(Model.timeId)).time
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appointmentDate):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.appointmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appointmentNote):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.appointmentNote)
+        </dd>
+
+        
+
+    </dl>
+
+    @using (Html.BeginForm("AppointmentDelete", "User"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-left:180px;" class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-info" href="~/User/AppointmentIndex">Return to my appointments</a>
+        </div>
+    }
+</div>

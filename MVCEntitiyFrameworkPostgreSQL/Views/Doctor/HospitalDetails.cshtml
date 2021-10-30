@@ -1,0 +1,33 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Hospital
+
+@{
+    ViewBag.Title = "HospitalDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">Hospital Details</h2></center>
+<br />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.address):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.address)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <a style="margin-left:180px;" class="btn btn-info" href="~/Doctor/HospitalIndex">Return to hospital list</a>
+</p>

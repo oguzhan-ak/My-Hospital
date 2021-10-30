@@ -1,0 +1,88 @@
+﻿@using MVCEntitiyFrameworkPostgreSQL.Models;
+@model AppointmentDoctorHospitalVM
+@{
+    ViewBag.Title = "AppointmentIndex";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">My Appointments</h2></center>
+<br />
+@if (Model.appointments.Count() == 0)
+{
+    <hr />
+    <br />
+    <center><h2>You don't have any appointment</h2></center>
+    <br />
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Patient Name</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Appointment Date</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Appointment Hour</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Appointment Note</h5>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (Appointment appointment in Model.appointments)
+        {
+
+
+            <tr>
+
+                <td>
+                    @Model.users.Where(x => x.id.Equals(appointment.userId)).ToArray()[0].username
+                </td>
+                <td>
+                    @appointment.appointmentDate.Day/@appointment.appointmentDate.Month/@appointment.appointmentDate.Year
+                </td>
+                <td>
+                    @Model.times.Where(x => x.id.Equals(appointment.timeId)).ToArray()[0].time
+                </td>
+                @if (appointment.appointmentNote.Length > 20)
+                {
+                    <td>
+                        <p>@appointment.appointmentNote.Substring(0, 19) (...)</p>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @appointment.appointmentNote
+                    </td>
+                }
+                @if (Model.results.Where(x => x.appointmentId.Equals(appointment.id)).ToArray().Count() == 0)
+                {
+                    <td>
+                        <a class="btn btn-info" href="~/Doctor/PatientDetails/@appointment.userId.ToString()">Patient Details</a> |
+                        <a class="btn btn-warning" href="~/Doctor/AddResult/@appointment.id.ToString()">Add Result</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a class="btn btn-info" href="~/Doctor/PatientDetails/@appointment.userId.ToString()">Patient Details</a> |
+                        <a class="btn btn-success" href="~/Doctor/EditResult/@Model.results.Where(x => x.appointmentId.Equals(appointment.id)).ToArray()[0].id.ToString()">Edit Result</a> |
+                        <a class="btn btn-info" href="~/Doctor/ResultDetails/@Model.results.Where(x => x.appointmentId.Equals(appointment.id)).ToArray()[0].id.ToString()">See Result</a> |
+                        <a class="btn btn-danger" href="~/Doctor/DeleteResult/@Model.results.Where(x => x.appointmentId.Equals(appointment.id)).ToArray()[0].id.ToString()">Delete Result</a>
+                    </td>
+                }
+
+
+
+
+            </tr>
+        }
+
+    </table>
+}
+

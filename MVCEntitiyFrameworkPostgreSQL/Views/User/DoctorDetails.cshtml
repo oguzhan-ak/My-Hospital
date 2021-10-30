@@ -1,0 +1,66 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Doctor
+
+@{
+    ViewBag.Title = "DoctorDetails";
+}
+
+<center><h2 style="font-weight: bold;">Doctor Details</h2></center>
+<br />
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hospitalId):
+        </dt>
+        @if (Model.hospitalId != null)
+        {
+            <dd>
+                @Model.hospitalsCollection.Find(x => x.id == Model.hospitalId).name
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not chosen
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title):
+        </dt>
+        @if (Model.title != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.title)
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not entered
+            </dd>
+        }
+        
+
+
+    </dl>
+</div>
+<p>
+    <a style="margin-left:180px;" class="btn btn-info" href="~/User/DoctorIndex">Return to Doctor List</a>
+</p>

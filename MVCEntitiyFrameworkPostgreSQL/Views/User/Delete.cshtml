@@ -1,0 +1,48 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<center><h2 style="font-weight: bold;">Delete Account</h2></center>
+<br />
+<h3>Are you sure you want to delete this?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Delete", "User"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-left:180px;" class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+    }
+</div>

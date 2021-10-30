@@ -1,0 +1,68 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Doctor
+
+@{
+    ViewBag.Title = "DoctorEdit";
+    Layout = "~/Views/Shared/_BakanLayout.cshtml";
+}
+
+<div style="background-color: #333333; justify-content: center; text-align: center; width: 180px; height: 60px; margin: auto; margin-top: 15px; margin-bottom: 20px; border: solid 1px; border-radius: 10px; border-color: black ">
+    <h2 style="margin-top: 13px; color: #9d9d9d"><b>Edit Doctor</b></h2>
+</div>
+
+
+
+@using (Html.BeginForm("DoctorEdit", "Bakan", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div style="background-color: #333333; margin: auto; border: solid 1px; border-radius: 10px; border-color: black; width: 400px; height: 400px; " class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.isActive)
+    @Html.HiddenFor(model => model.createdDate)
+    
+    <div style="width: 399px; height: 400px;">
+        <div style="margin-top:50px;margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.title, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2 text-center" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })</center>
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.salary, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.EditorFor(model => model.salary, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter int TL like 3000" } })</center>
+                @Html.ValidationMessageFor(model => model.salary, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div style="margin-left:0px; width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.hospitalId, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px", @class = "control-label col-md-2" })
+            <br />
+            <div style="width:100%">
+                <center>@Html.DropDownListFor(model => model.hospitalId, new SelectList(Model.hospitalsCollection, "id", "name"), "Select Hospital", new { @class = "form-control" })</center>
+                @Html.ValidationMessageFor(model => model.hospitalId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="margin: 0px; width: 100%;" class="col-md-offset-2 col-md-10">
+                <center><input style="height: 40px; width: 70px; font-size: 20px; font-weight: 500; background-color: #9d9d9d;border-color:black;margin-top:20px;" type="submit" value="Save" class="btn btn-default" /></center>
+            </div>
+        </div>
+    </div>
+    
+</div>
+}
+<br />
+<br />
+<p>
+    <center><a class="btn btn-danger" href="~/Bakan/DoctorDelete/@Model.id.ToString()">Delete This Doctor</a></center>
+</p>
+<br />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,99 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.User
+
+@{
+    ViewBag.Title = "PatientDetails";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<center><h2>Patient Details</h2></center>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.username):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.email):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.age):
+        </dt>
+
+        @if (Model.age != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.age)
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not entered
+            </dd>
+        }
+        <dt>
+            @Html.DisplayNameFor(model => model.weight):
+        </dt>
+        @if (Model.weight != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.weight) kg
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not entered
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.height):
+        </dt>
+        @if (Model.height != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.height) cm
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not entered
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bloodTypeId):
+        </dt>
+        @if (Model.bloodTypeId != -1)
+        {
+            <dd>
+                @Model.bloodTypesCollection.Find(x=>x.id.Equals(Model.bloodTypeId)).type
+            </dd>
+        }
+        else
+        {
+            <dd>
+                Not chosen
+            </dd>
+        }
+
+    </dl>
+</div>
+<p>
+    
+    <a style="margin-left:180px;" class="btn btn-info" href="~/Doctor/AppointmentIndex">Return to my appointments</a>
+    <a class="btn btn-info" href="~/Doctor/ResultIndex">Return to my results</a>
+</p>

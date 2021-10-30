@@ -1,0 +1,70 @@
+﻿@model List<MVCEntitiyFrameworkPostgreSQL.Models.Hospital>
+@using GridMvc.Html
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BakanLayout.cshtml";
+}
+<link href="~/css/mystyles.css" rel="stylesheet" />
+<center><h2 style="font-weight: bold;">Hospitals</h2></center>
+<br />
+<p style="float:left;margin-top:20px;">
+    <a style="width:190px;height:50px;padding-top:13px;" class="btn btn-warning" href="~/Bakan/HospitalCreate">Add New Hospital</a>
+</p>
+<br />
+
+<div class="container">
+    <div class="form-group">
+        <div class="input-group">
+            <input style="float: right; width: 270px; height: 50px; padding-bottom: 8px;" type="text" id="Search" placeholder="Search" class="form-control" />
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+        </div>
+    </div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr style="background-color: #c4daff !important; ">
+            <th>@Html.ActionLink("Hospital Name", "HospitalIndex", new { sortOrder = ViewBag.NameSortParm }, new { @class = "btn btn-danger" })</th>
+            <th>@Html.ActionLink("Hospital Address", "HospitalIndex", new { sortOrder = ViewBag.DateSortParm }, new { @class = "btn btn-danger" })</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tblData">
+
+    </tbody>
+    @foreach (var item in Model)
+    {
+        <tr class="Search">
+            <td>@item.name</td>
+            <td>@item.address</td>
+            <td>
+                <a style="float:right;" class="btn btn-danger" href="~/Bakan/HospitalDelete/@item.id.ToString()">Delete</a>
+                <a style="float:right;margin-right:10px;" class="btn btn-info" href="~/Bakan/HospitalDetails/@item.id.ToString()">Details</a>
+                <a style="float:right;margin-right:10px;" class="btn btn-success" href="~/Bakan/HospitalEdit/@item.id.ToString()">Edit</a>
+            </td>
+        </tr>
+    }
+</table>
+<div id="paged">
+
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Contains(text_one, text_two) {
+            if (text_one.indexOf(text_two) != -1)
+                return true;
+        }
+        $("#Search").keyup(function () {
+            var searchText = $("#Search").val().toLowerCase();
+            $(".Search").each(function () {
+                if (!Contains($(this).text().toLowerCase(), searchText)) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+
+    });
+    
+</script>

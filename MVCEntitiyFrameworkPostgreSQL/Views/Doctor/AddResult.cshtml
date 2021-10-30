@@ -1,0 +1,41 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Result
+
+@{
+    ViewBag.Title = "AddResult";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+<link href="~/css/mystyles.css" rel="stylesheet" />
+<div style="background-color: #333333; justify-content: center; text-align: center; width: 180px; height: 60px; margin: auto; margin-top: 15px; margin-bottom: 20px; border: solid 1px; border-radius: 10px; border-color: black ">
+    <h2 style="margin-top: 13px; color: #9d9d9d"><b>Add Result</b></h2>
+</div>
+@using (Html.BeginForm("AddResult", "Doctor", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.id)
+    @Html.HiddenFor(m => m.appointmentId)
+    <div style="background-color: #333333; margin: auto; border: solid 1px; border-radius: 10px; border-color: black; width: 400px; height: 300px; " class="form-horizontal">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div style="margin-top:50px;margin-left:0px;width:100%" class="form-group text-center">
+            @Html.LabelFor(model => model.resultText, htmlAttributes: new { style = "color: #9d9d9d;text-align:center;float:none;width:170px;margin-bottom:5px;", @class = "control-label col-md-2" })
+            <div style="width:100%">
+                <center>@Html.TextAreaFor(model => model.resultText, new { @class = "textarea1", @rows = 3, @cols = 100 })</center>
+                @Html.ValidationMessageFor(model => model.resultText, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div style="margin: 0px; width: 100%;" class="col-md-offset-2 col-md-10">
+                <center><input type="submit" value="Add" class="btn btn-success" /></center>
+            </div>
+        </div>
+    </div>
+}
+<br />
+<br />
+<div>
+    <center><a class="btn btn-info" href="~/Doctor/ResultIndex">Return to My Results</a></center>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,59 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Appointment
+
+@{
+    ViewBag.Title = "AppointmentDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/css/mystyles.css" rel="stylesheet" />
+<center><h2 style="font-weight: bold;">Appointment Details</h2></center>
+<br />
+<div class="abc">
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.doctorId):
+        </dt>
+
+        <dd>
+            @Model.doctorsCollection.Find(x => x.id.Equals(Model.doctorId)).name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hospitalId):
+        </dt>
+
+        <dd>
+            @Model.hospitalsCollection.Find(x => x.id.Equals(Model.hospitalId)).name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.timeId):
+        </dt>
+
+        <dd>
+            @Model.timesCollection.Find(x => x.id.Equals(Model.timeId)).time
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appointmentDate):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.appointmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appointmentNote):
+        </dt>
+        
+        <dd>
+            <p>@Model.appointmentNote</p>
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    <a style="margin-left:180px;" class="btn btn-info" href="~/User/AppointmentIndex">Return to Appointment List</a>
+</p>

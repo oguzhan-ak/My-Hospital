@@ -1,0 +1,102 @@
+﻿@using MVCEntitiyFrameworkPostgreSQL.Models;
+@model AppointmentDoctorHospitalVM
+@{
+    ViewBag.Title = "ResultIndex";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">Results</h2></center>
+<br />
+@if (Model.results.Count() == 0)
+{
+    <hr />
+    <br />
+    <center><h2>You don't have any results</h2></center>
+    <br />
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Result</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Created Date</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Updated Date</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Updated Doctor Name</h5>
+            </th>
+            <th>
+                <h5 style="color: red; font-weight: bold;">Patient Name</h5>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (Result result in Model.results)
+        {
+            <tr>
+                @if (result.resultText.Length > 25)
+                {
+                    <td>
+                        @result.resultText.Substring(0, 24) (...)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @result.resultText
+                    </td>
+                }
+                <td>
+                    @result.createdDate
+                </td>
+
+                @if (result.updatedDate == null)
+                {
+                    <td>
+                        Not Updated Yet
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @result.updatedDate
+                    </td>
+                }
+                @if (result.updatedDoctorId == null)
+                {
+                    <td>
+                        Not Updated Yet
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Model.doctors.Where(x => x.id.Equals(result.createdDoctorId)).ToArray()[0].name
+                    </td>
+                }
+                <td>
+                    @foreach (var item in Model.users)
+                    {
+                        if (item.id.Equals(@Model.appointments.Where(x => x.id.Equals(result.appointmentId)).ToArray()[0].userId))
+                        {
+                            <p>@item.username</p>
+                        }
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-success" href="~/Doctor/EditResult/@result.id.ToString()">Edit</a> |
+                    <a class="btn btn-info" href="~/Doctor/ResultDetails/@result.id.ToString()">Details</a> |
+                    <a class="btn btn-danger" href="~/Doctor/DeleteResult/@result.id.ToString()">Delete</a> |
+                    <a class="btn btn-info" href="~/Doctor/PatientDetails/@Model.appointments.Where(x => x.id.Equals(result.appointmentId)).ToArray()[0].userId.ToString()">Patient Details</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

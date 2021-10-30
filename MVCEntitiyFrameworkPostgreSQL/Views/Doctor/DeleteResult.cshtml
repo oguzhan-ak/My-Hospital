@@ -1,0 +1,88 @@
+﻿@model MVCEntitiyFrameworkPostgreSQL.Models.Result
+
+@{
+    ViewBag.Title = "DeleteResult";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">Delete Result</h2></center>
+<br />
+
+<h3>Are you sure you want to delete this result ?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Result:
+        </dt>
+
+        <dd>
+            @Model.resultText
+        </dd>
+
+        <dt>
+            Created Date:
+        </dt>
+
+        <dd>
+            @Model.createdDate
+        </dd>
+
+        <dt>
+            Created Doctor Name:
+        </dt>
+
+        <dd>
+            @Model.doctorsCollection.Find(x => x.id.ToString().Equals(Model.createdDoctorId.ToString())).name
+        </dd>
+
+        <dt>
+            Updated Date:
+        </dt>
+        @if (Model.updatedDate == null)
+        {
+            <dd>
+                Not updated yet
+            </dd>
+        }
+        else
+        {
+            <dd>
+                @Model.updatedDate
+            </dd>
+
+        }
+
+
+        <dt>
+            Updated Doctor Name:
+        </dt>
+
+        @if (Model.updatedDoctorId == null)
+        {
+            <dd>
+                Not updated yet
+            </dd>
+        }
+        else
+        {
+            <dd>
+                @Model.doctorsCollection.Find(x => x.id.ToString().Equals(Model.updatedDoctorId.ToString())).name
+            </dd>
+
+        }
+
+    </dl>
+
+    @using (Html.BeginForm("DeleteResult", "Doctor"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-left:180px;" class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="btn btn-info" href="~/Doctor/ResultIndex">Return to my results</a> |
+            <a class="btn btn-info" href="~/Doctor/AppointmentIndex">Return to my appointments</a>
+        </div>
+    }
+</div>

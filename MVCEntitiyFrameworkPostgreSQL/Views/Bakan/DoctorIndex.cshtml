@@ -1,0 +1,91 @@
+﻿@using MVCEntitiyFrameworkPostgreSQL.Models;
+@model AppointmentDoctorHospitalVM
+@{
+    ViewBag.Title = "DoctorIndex";
+    Layout = "~/Views/Shared/_BakanLayout.cshtml";
+}
+
+<center><h2 style="font-weight: bold;">Doctors</h2></center>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Doctor Name</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">E-mail</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Hospital Name</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Title</h5>
+        </th>
+        <th>
+            <h5 style="color: red; font-weight: bold;">Salary</h5>
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (Doctor doctor in Model.doctors)
+    {
+        if (doctor.isAdmin == false)
+        {
+            <tr>
+                <td>
+                    @doctor.name
+                </td>
+                <td>
+                    @doctor.email
+                </td>
+                @if (@Model.hospitals.Where(x => x.id.Equals(doctor.hospitalId)).ToArray().Count() == 0)
+                {
+                    <td>
+                        Hospital not set
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Model.hospitals.Where(x => x.id.Equals(doctor.hospitalId)).ToArray()[0].name
+                    </td>
+                }
+                @if (doctor.title == null)
+                {
+                    <td>
+                        Title not set
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @doctor.title
+                    </td>
+                }
+                @if (doctor.salary == null)
+                {
+                    <td>
+                        Salary not set
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @doctor.salary
+                    </td>
+                }
+                <td></td>
+                <td>
+                    <a class="btn btn-success" href="~/Bakan/DoctorEdit/@doctor.id.ToString()">Edit</a> |
+                    <a class="btn btn-info" href="~/Bakan/DoctorDetails/@doctor.id.ToString()">Details</a> |
+                    <a class="btn btn-danger" href="~/Bakan/DoctorDelete/@doctor.id.ToString()">Delete</a>
+                </td>
+
+            </tr>
+        }
+
+
+    }
+
+</table>

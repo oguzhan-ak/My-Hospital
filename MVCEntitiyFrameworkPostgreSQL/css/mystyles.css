@@ -1,0 +1,47 @@
+﻿body {
+}
+.datechoosing{
+    float:left;
+    margin-left:109px;
+    margin-right:-75px;
+}
+.datesymbol{
+    padding-bottom:6px;
+    margin-top:6px;
+}
+.textarea {
+    max-height: 70px;
+    min-height: 70px;
+    max-width: 280px;
+    min-width: 280px;
+    border-radius:5px;
+}
+.textarea1 {
+    max-height: 120px;
+    min-height: 120px;
+    max-width: 320px;
+    min-width: 320px;
+    border-radius:5px;
+}
+.abc{
+    width:100%;
+    table-layout:fixed;
+    word-wrap:break-word;
+}
+.grid-filter{
+    display:none;
+}
+
+.grid-header-title a{
+    color: red;
+}
+.grid-header-title{
+    color:black;
+}
+.grid-pager{
+    align-content:center;
+    text-align:center;
+}
+td.grid-cell{
+    width:40%;
+}

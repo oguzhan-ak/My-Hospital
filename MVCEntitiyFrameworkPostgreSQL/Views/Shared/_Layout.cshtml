@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="background-color: #c4daff ">
+    <nav style="margin-top:-50px;" class="navbar navbar-inverse">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px" class="navbar-brand" href="~/Home/Index">MyHospital</a>
+            </div>
+            <ul style="border-radius:3px;" class="nav navbar-nav">
+                <li style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/ToMainPage">Main Page</a></li>
+                <li style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/HospitalIndex">Hastaneler</a></li>
+                <li style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/DoctorIndex">Doktorlar</a></li>
+                <li style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="/User/ResultIndex">Sonuçlarım</a></li>
+                <li style="border-right: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/AppointmentIndex">Randevularım</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (Session["EmailSS"] != null)
+                {
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/TakeAppointment/@Session["IdSS"].ToString()"><span class="glyphicon glyphicon-tasks"></span> Randevu Al</a> </li>
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/Edit/@Session["IdSS"].ToString()"><span class="glyphicon glyphicon-user"></span> My Account</a> </li>
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/Logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                }
+                else
+                {
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/TakeAppointment"><span class="glyphicon glyphicon-tasks"></span> Randevu Al</a> </li>
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/Create"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li style="border-left: solid 1px; border-color: #B9C7FF; border-width: 2px"><a href="~/User/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                }
+
+            </ul>
+        </div>
+    </nav>
+    <div style="padding-left:0px;padding-right:0px;" class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
